@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace NotificationGateway.Test;
+namespace NotificationGateway.Controllers;
 
 [ApiController]
 [Route("api/v1/healthcheck")]
