@@ -1,8 +1,7 @@
-using NotificationGateway.Dtos;
-
 namespace NotificationGateway.Interfaces;
 
 public interface INotificationPublisher
 {
-    public Task PublishAsync(NotificationMessage message, CancellationToken cancellationToken = default);
+    public Task PublishAsync<TNotificationMessage>(TNotificationMessage message, CancellationToken cancellationToken = default)
+        where TNotificationMessage : INotificationMessage;
 }

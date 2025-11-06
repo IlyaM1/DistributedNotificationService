@@ -6,5 +6,5 @@ public record SendNotificationRequest(
     NotificationTypeEnum Type,
     string Recipient,
     string Message,
-    List<string>? Metadata
+    Dictionary<string, string>? Metadata
 );
