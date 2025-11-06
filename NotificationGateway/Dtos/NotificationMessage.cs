@@ -2,9 +2,10 @@ using NotificationGateway.Enums;
 
 namespace NotificationGateway.Dtos;
 
-public record SendNotificationRequest(
+public record NotificationMessage(
     NotificationTypeEnum Type,
     string Recipient,
     string Message,
-    List<string>? Metadata
+    List<string>? Metadata,
+    DateTime CreatedAt
 );
