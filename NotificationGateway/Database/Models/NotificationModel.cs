@@ -10,6 +10,6 @@ public class NotificationModel
     public required NotificationTypeEnum Type { get; set; }
     public required string Recipient { get; set; }
     public required string Message { get; set; }
-    public List<string>? Metadata { get; set; }
+    public Dictionary<string, string>? Metadata { get; set; }
     public DateTime CreatedAt { get; set; }
 }

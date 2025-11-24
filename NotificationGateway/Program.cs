@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotificationGateway.Database;
+using NotificationGateway.Database.Repositories;
 using NotificationGateway.Handlers;
 using NotificationGateway.Interfaces;
 using NotificationGateway.Services;
@@ -32,7 +33,10 @@ builder.Services.AddMassTransit(x =>
 builder.Services.AddSingleton<INotificationHandler, SmsNotificationHandler>();
 builder.Services.AddSingleton<INotificationHandlersFactory, NotificationHandlersFactory>();
 
-//builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql().UseLazyLoadingProxies());
+var connectionString = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString).UseLazyLoadingProxies());
+
+builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
 
 builder.Services.AddTransient<INotificationPublisher, NotificationPublisher>();
 
