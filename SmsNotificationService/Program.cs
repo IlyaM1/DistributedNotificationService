@@ -3,8 +3,6 @@ using SmsNotificationService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Console.WriteLine(1);
-
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SmsNotificationConsumer, SmsNotificationConsumerDefinition>();

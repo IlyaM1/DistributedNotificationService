@@ -3,12 +3,7 @@ using NotificationGateway.Database.Models;
 
 namespace NotificationGateway.Database;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
 {
     public DbSet<NotificationModel> Notifications { get; set; }
-
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-    {
-
-    }
 }
