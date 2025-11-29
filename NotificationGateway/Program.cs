@@ -25,6 +25,10 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, config) =>
     {
+        config.ClearSerialization();
+        config.UseRawJsonSerializer(RawSerializerOptions.AnyMessageType, isDefault: true);
+        config.UseRawJsonDeserializer(RawSerializerOptions.AnyMessageType, isDefault: true);
+
         config.Host("localhost", "/");
         config.ConfigureEndpoints(context);
     });

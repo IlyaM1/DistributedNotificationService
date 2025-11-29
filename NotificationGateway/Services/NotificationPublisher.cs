@@ -5,10 +5,10 @@ namespace NotificationGateway.Services;
 
 public class NotificationPublisher(IBus bus) : INotificationPublisher
 {
-    public async Task PublishAsync<TNotificationMessage>(TNotificationMessage message, CancellationToken cancellationToken = default) 
+    public async Task PublishAsync<TNotificationMessage>(TNotificationMessage message, Uri sendEndpointUri, CancellationToken cancellationToken = default) 
         where TNotificationMessage : INotificationMessage
     {
-        var sendEndpoint = await bus.GetSendEndpoint(new Uri($"queue:{message.QueueName}.send"));
+        var sendEndpoint = await bus.GetSendEndpoint(sendEndpointUri);
         await sendEndpoint.Send(message, cancellationToken);
     }
 }

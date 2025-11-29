@@ -18,6 +18,6 @@ public class SmsNotificationHandler(INotificationPublisher publisher) : INotific
             CreatedAt: DateTime.UtcNow
         );
 
-        await publisher.PublishAsync(smsMessage, cancellationToken);
+        await publisher.PublishAsync(smsMessage, new Uri($"queue:notifications.sms.send"), cancellationToken);
     }
 }
