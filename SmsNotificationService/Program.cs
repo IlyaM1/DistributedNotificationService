@@ -1,4 +1,5 @@
 using MassTransit;
+using SmsNotificationService.Abstractions;
 using SmsNotificationService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,5 +18,7 @@ builder.Services.AddMassTransit(x =>
         config.ConfigureEndpoints(context);
     });
 });
+
+builder.Services.AddTransient<ISmsSender, MockSmsSender>();
 
 await builder.Build().RunAsync();

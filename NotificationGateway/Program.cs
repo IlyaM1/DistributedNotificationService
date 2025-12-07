@@ -34,23 +34,19 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddSingleton<INotificationHandler, SmsNotificationHandler>();
-builder.Services.AddSingleton<INotificationHandlersFactory, NotificationHandlersFactory>();
-
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString).UseLazyLoadingProxies());
 
+builder.Services.AddSingleton<INotificationHandler, SmsNotificationHandler>();
+builder.Services.AddSingleton<INotificationHandlersFactory, NotificationHandlersFactory>();
 builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
-
 builder.Services.AddTransient<INotificationPublisher, NotificationPublisher>();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
 app.MapOpenApi();
 app.MapScalarApiReference();
-
 app.MapControllers();
 
 await app.RunAsync();
