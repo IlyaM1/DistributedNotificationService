@@ -7,7 +7,7 @@ using NotificationGateway.Interfaces;
 
 namespace NotificationGateway.Handlers;
 
-public class SmsNotificationHandler(INotificationPublisher publisher, INotificationRepository notificationRepository) : INotificationHandler
+public class SmsNotificationHandler(INotificationPublisher publisher, INotificationRepository notificationRepository, IConfiguration configuration) : INotificationHandler
 {
     public NotificationTypeEnum Type => NotificationTypeEnum.Sms;
 
@@ -28,6 +28,20 @@ public class SmsNotificationHandler(INotificationPublisher publisher, INotificat
         var status = EnumHelper.ParseFromString<StatusEnum>(responseDto.Status);
         await notificationRepository.UpdateStatusAsync(responseDto.Id, status);
 
-        // TODO: add retry policy
+        if (status is StatusEnum.Failed)
+        {
+            var retriesAmount = await notificationRepository.GetAmountOfRetries(responseDto.Id);
+            if (retriesAmount >= int.Parse(configuration["AmountOfRetries"]!))
+            {
+                await notificationRepository.UpdateStatusAsync(responseDto.Id, StatusEnum.PermanentlyFailed);
+            }
+            else
+            {
+                await notificationRepository.UpdateStatusAsync(responseDto.Id, StatusEnum.Retrying);
+                await notificationRepository.IncrementAmountOfRetries(responseDto.Id);
+                var notificationToResend = await notificationRepository.GetAsync(responseDto.Id);
+                await SendNotification(notificationToResend, cancellationToken);
+            }
+        }
     }
 }

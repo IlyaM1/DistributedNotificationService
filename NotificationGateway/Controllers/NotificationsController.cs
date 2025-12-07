@@ -24,6 +24,7 @@ public class NotificationsController(
             Recipient = request.Recipient,
             Metadata = request.Metadata,
             CreatedAt = DateTime.UtcNow,
+            LastUpdatedAt = DateTime.UtcNow,
         };
         await notificationRepository.CreateAsync(notification);
 
