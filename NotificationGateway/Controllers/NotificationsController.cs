@@ -15,7 +15,7 @@ public class NotificationsController(
     [HttpPost]
     public async Task<IActionResult> SendNotification([FromBody] SendNotificationRequest request, CancellationToken cancellationToken)
     {
-        var notificationId = await notificationRepository.CreateAsync(new NotificationModel()
+        var notification = new NotificationModel()
         {
             Id = Guid.NewGuid(),
             Status = StatusEnum.Created,
@@ -24,7 +24,8 @@ public class NotificationsController(
             Recipient = request.Recipient,
             Metadata = request.Metadata,
             CreatedAt = DateTime.UtcNow,
-        });
+        };
+        await notificationRepository.CreateAsync(notification);
 
         if (!handlersFactory.IsSupported(request.Type))
         {
@@ -32,10 +33,10 @@ public class NotificationsController(
         }
 
         var handler = handlersFactory.GetHandler(request.Type);
-        await handler.SendNotification(request, cancellationToken);
+        await handler.SendNotification(notification, cancellationToken);
 
-        await notificationRepository.UpdateStatusAsync(notificationId, StatusEnum.Queued);
+        await notificationRepository.UpdateStatusAsync(notification.Id, StatusEnum.Queued);
 
-        return new OkObjectResult(notificationId);
+        return new OkObjectResult(notification.Id);
     }
 }

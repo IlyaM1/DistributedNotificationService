@@ -7,11 +7,10 @@ namespace NotificationGateway.Database.Repositories;
 
 public class NotificationRepository(DatabaseContext database) : INotificationRepository
 {
-    public async Task<Guid> CreateAsync(NotificationModel notification)
+    public async Task CreateAsync(NotificationModel notification)
     {
         database.Notifications.Add(notification);
         await database.SaveChangesAsync();
-        return notification.Id;
     }
 
     public async Task UpdateStatusAsync(Guid notificationId, StatusEnum status)

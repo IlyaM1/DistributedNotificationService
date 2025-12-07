@@ -1,4 +1,4 @@
-namespace SmsNotificationService.Dtos;
+namespace NotificationGateway.Dtos;
 
 public record BrokerResponseDto(
     Guid Id,

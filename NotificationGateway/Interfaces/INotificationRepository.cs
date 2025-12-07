@@ -5,6 +5,6 @@ namespace NotificationGateway.Interfaces;
 
 public interface INotificationRepository
 {
-    public Task<Guid> CreateAsync(NotificationModel notification);
+    public Task CreateAsync(NotificationModel notification);
     public Task UpdateStatusAsync(Guid notificationId, StatusEnum status);
 }

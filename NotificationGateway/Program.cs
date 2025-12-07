@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NotificationGateway.Consumers;
 using NotificationGateway.Database;
 using NotificationGateway.Database.Repositories;
 using NotificationGateway.Handlers;
@@ -23,6 +24,8 @@ builder.Services.Configure<JsonOptions>(options =>
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<SmsResultConsumer, SmsResultConsumerDefinition>();
+
     x.UsingRabbitMq((context, config) =>
     {
         config.ClearSerialization();
@@ -37,8 +40,9 @@ builder.Services.AddMassTransit(x =>
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString).UseLazyLoadingProxies());
 
-builder.Services.AddSingleton<INotificationHandler, SmsNotificationHandler>();
-builder.Services.AddSingleton<INotificationHandlersFactory, NotificationHandlersFactory>();
+builder.Services.AddTransient<INotificationHandler, SmsNotificationHandler>();
+builder.Services.AddTransient<SmsNotificationHandler>();
+builder.Services.AddTransient<INotificationHandlersFactory, NotificationHandlersFactory>();
 builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
 builder.Services.AddTransient<INotificationPublisher, NotificationPublisher>();
 
