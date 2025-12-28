@@ -25,6 +25,7 @@ builder.Services.Configure<JsonOptions>(options =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SmsResultConsumer, SmsResultConsumerDefinition>();
+    x.AddConsumer<EmailResultConsumer, EmailResultConsumerDefinition>();
 
     x.UsingRabbitMq((context, config) =>
     {
@@ -42,6 +43,9 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(conn
 
 builder.Services.AddTransient<INotificationHandler, SmsNotificationHandler>();
 builder.Services.AddTransient<SmsNotificationHandler>();
+builder.Services.AddTransient<INotificationHandler, EmailNotificationHandler>();
+builder.Services.AddTransient<EmailNotificationHandler>();
+
 builder.Services.AddTransient<INotificationHandlersFactory, NotificationHandlersFactory>();
 builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
 builder.Services.AddTransient<INotificationPublisher, NotificationPublisher>();
