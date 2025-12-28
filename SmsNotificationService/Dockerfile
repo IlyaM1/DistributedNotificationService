@@ -10,4 +10,4 @@ EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./NotificationGateway"]
+ENTRYPOINT ["./SmsNotificationService"]

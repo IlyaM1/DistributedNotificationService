@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>5e849426-d545-4f48-996b-98ae933b94d8</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <RuntimeIdentifier>linux-musl-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>

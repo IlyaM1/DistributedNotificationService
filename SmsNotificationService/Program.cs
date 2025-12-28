@@ -4,6 +4,8 @@ using SmsNotificationService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var rabbitMqUrl = builder.Configuration["RabbitMqUrl"];
+
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SmsNotificationConsumer, SmsNotificationConsumerDefinition>();
@@ -14,7 +16,19 @@ builder.Services.AddMassTransit(x =>
         config.UseRawJsonSerializer(RawSerializerOptions.AnyMessageType, isDefault: true);
         config.UseRawJsonDeserializer(RawSerializerOptions.AnyMessageType, isDefault: true);
 
-        config.Host("localhost", "/");
+        if (!string.IsNullOrEmpty(rabbitMqUrl))
+        {
+            config.Host(new Uri(rabbitMqUrl));
+        }
+        else
+        {
+            config.Host("localhost", "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+        }
+
         config.ConfigureEndpoints(context);
     });
 });
