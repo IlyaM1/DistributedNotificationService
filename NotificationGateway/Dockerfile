@@ -1,4 +1,3 @@
-# Базовый образ для сборки
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY NotificationGateway.csproj .
@@ -19,7 +18,6 @@ RUN adduser --disabled-password --home /app --gecos '' dotnetuser \
 USER dotnetuser
 
 COPY --from=build --chown=dotnetuser:dotnetuser /app/publish .
-
 
 EXPOSE 8080
 EXPOSE 8081
