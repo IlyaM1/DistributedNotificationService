@@ -15,7 +15,7 @@
 ## Архитектура системы
 Система построена по микросервисной архитектуре с общением через брокер сообщений.
 
-[Архитектура системы](https://iimg.su/i/QfC6rk)
+[Архитектура системы](docs/imgs/architecture.png)
 
 ### Компоненты:
 - **NotificationGateway** (.NET) — основной шлюз, принимает запросы, маршрутизирует, управляет ретраями и сохраняет состояние в БД.
@@ -194,15 +194,15 @@ go run .
 5. Зарегистрировать в DI (Program.cs)
 ## Скриншоты
 ### Работа с email:
-[Запрос](https://iimg.su/i/x88Iwm)
+[Запрос](docs/imgs/emailrequest.jpg)
 
-[Полученное письмо](https://iimg.su/i/rTmGXl)
+[Полученное письмо](docs/imgs/emailletter.jpg)
 
-[Запись в БД](https://iimg.su/i/QUJj5O)
+[Запись в БД](docs/imgs/emaildb.jpg)
 
 ### Работа с SMS:
-[Запрос](https://iimg.su/i/4hmil8)
+[Запрос](docs/imgs/smsrequest.jpg)
 
-[Запись в логах](https://iimg.su/i/0HjX0Z)
+[Запись в логах](docs/imgs/smslogs.jpg)
 
-[Запись в БД](https://iimg.su/i/qQUIfX)
+[Запись в БД](docs/imgs/smsdb.jpg)
