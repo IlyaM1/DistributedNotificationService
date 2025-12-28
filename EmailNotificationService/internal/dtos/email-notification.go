@@ -7,10 +7,10 @@ import (
 )
 
 type EmailNotificationDto struct {
-	Id          uuid.UUID         `json:"Id"`
-	Email       string            `json:"Email"`
-	Theme       string            `json:"Theme"`
-	Message     string            `json:"Message"`
-	Attachments map[string]string `json:"Attachments,omitempty"`
-	CreatedAt   time.Time         `json:"CreatedAt"`
+	Id          uuid.UUID         `json:"id"`
+	Email       string            `json:"email"`
+	Theme       string            `json:"theme"`
+	Message     string            `json:"message"`
+	Attachments map[string]string `json:"attachments,omitempty"`
+	CreatedAt   time.Time         `json:"createdAt"`
 }
