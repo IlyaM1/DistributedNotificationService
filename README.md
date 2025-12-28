@@ -15,7 +15,7 @@
 ## Архитектура системы
 Система построена по микросервисной архитектуре с общением через брокер сообщений.
 
-[Архитектура системы](docs/imgs/architecture.png)
+![Архитектура системы](docs/imgs/architecture.png)
 
 ### Компоненты:
 - **NotificationGateway** (.NET) — основной шлюз, принимает запросы, маршрутизирует, управляет ретраями и сохраняет состояние в БД.
@@ -186,23 +186,21 @@ cd EmailNotificationService
 go run .
 ```
 Для проверки запросов зайти в Scalar [https://localhost:7049/scalar/](https://localhost:7049/scalar/)
+
 ## Как добавить новый канал
 1. Добавить новый тип в NotificationTypeEnum.cs
 2. Создать DTO для сообщения (по аналогии с EmailNotificationMessage.cs)
 3. Добавить Consumer и его Definition
 4. Реализовать Handler
 5. Зарегистрировать в DI (Program.cs)
+
 ## Скриншоты
 ### Работа с email:
-[Запрос](docs/imgs/emailrequest.jpg)
-
-[Полученное письмо](docs/imgs/emailletter.jpg)
-
-[Запись в БД](docs/imgs/emaildb.jpg)
+![Запрос](docs/imgs/emailrequest.jpg)
+![Полученное письмо](docs/imgs/emailletter.jpg)
+![Запись в БД](docs/imgs/emaildb.jpg)
 
 ### Работа с SMS:
-[Запрос](docs/imgs/smsrequest.jpg)
-
-[Запись в логах](docs/imgs/smslogs.jpg)
-
-[Запись в БД](docs/imgs/smsdb.jpg)
+![Запрос](docs/imgs/smsrequest.jpg)
+![Запись в логах](docs/imgs/smslogs.jpg)
+![Запись в БД](docs/imgs/smsdb.jpg)
