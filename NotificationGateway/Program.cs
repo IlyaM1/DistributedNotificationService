@@ -22,6 +22,8 @@ builder.Services.Configure<JsonOptions>(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 });
 
+var rabbitMqUrl = builder.Configuration["RabbitMqUrl"];
+
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SmsResultConsumer, SmsResultConsumerDefinition>();
@@ -33,7 +35,19 @@ builder.Services.AddMassTransit(x =>
         config.UseRawJsonSerializer(RawSerializerOptions.AnyMessageType, isDefault: true);
         config.UseRawJsonDeserializer(RawSerializerOptions.AnyMessageType, isDefault: true);
 
-        config.Host("localhost", "/");
+        if (!string.IsNullOrEmpty(rabbitMqUrl))
+        {
+            config.Host(new Uri(rabbitMqUrl));
+        }
+        else
+        {
+            config.Host("localhost", "/", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+        }
+
         config.ConfigureEndpoints(context);
     });
 });
